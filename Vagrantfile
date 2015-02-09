@@ -57,8 +57,16 @@ Vagrant.configure("2") do |config|
       v.name = "vm-cluster-node1"
       v.vmx["memsize"] = "4096"
       v.gui = true
+      v.vmx["vhv.enable"] = "TRUE" #Enable nested hypervisors to run x64 OS
+      v.vmx["ethernet1.generatedAddress"] = nil #If the vmx file contains an auto-generated MAC address, remove it
+      v.vmx["ethernet1.addressType"] = "static" #specify the MAC is static
+      v.vmx["ethernet1.connectionType"] = "nat" #specify the NAT network
+      v.vmx["ethernet1.present"] = "TRUE" #enable the NIC for the OS
+      v.vmx["ethernet1.address"] = "00:0c:29:ca:d4:a0" #the MAC address
     end
     master.vm.network :public_network    #, ip: "10.211.55.100"
+
+
     master.vm.hostname = "vm-cluster-node1"
     master.vm.provision :shell, :inline => $hosts_script
     master.vm.provision :hostmanager
