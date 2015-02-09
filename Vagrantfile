@@ -53,60 +53,83 @@ Vagrant.configure("2") do |config|
 
 
   config.vm.define :master do |master|
-    master.vm.provider :vmware_fusion do |v|
-      v.name = "vm-cluster-node1"
-      v.vmx["memsize"] = "4096"
-      v.gui = true
-      v.vmx["vhv.enable"] = "TRUE" #Enable nested hypervisors to run x64 OS
-      v.vmx["ethernet1.generatedAddress"] = nil #If the vmx file contains an auto-generated MAC address, remove it
-      v.vmx["ethernet1.addressType"] = "static" #specify the MAC is static
-      v.vmx["ethernet1.connectionType"] = "nat" #specify the NAT network
-      v.vmx["ethernet1.present"] = "TRUE" #enable the NIC for the OS
-      v.vmx["ethernet1.address"] = "00:0c:29:ca:d4:a0" #the MAC address
-    end
     master.vm.network :public_network    #, ip: "10.211.55.100"
-
-
     master.vm.hostname = "vm-cluster-node1"
     master.vm.provision :shell, :inline => $hosts_script
     master.vm.provision :hostmanager
     master.vm.provision :shell, :inline => $master_script
+    master.vm.provider :vmware_fusion do |v|
+      v.name = "vm-cluster-node1"
+      v.vmx["memsize"] = "4096"
+      v.gui = false
+      v.vmx["vhv.enable"] = "TRUE" #Enable nested hypervisors to run x64 OS
+      v.vmx["ethernet0.generatedAddress"] = nil #If the vmx file contains an auto-generated MAC address, remove it
+      v.vmx["ethernet0.addressType"] = "static" #specify the MAC is static
+      v.vmx["ethernet0.connectionType"] = "nat" #specify the NAT network
+      v.vmx["ethernet0.present"] = "TRUE" #enable the NIC for the OS
+      v.vmx["ethernet0.address"] = "00:0c:29:ca:d4:a0" #the MAC address
+    end
+
   end
 
   config.vm.define :slave1 do |slave1|
     slave1.vm.box = "hashicorp/precise64"
-    slave1.vm.provider :virtualbox do |v|
-      v.name = "vm-cluster-node2"
-      v.vmx["memsize"] = "2048"
-    end
     slave1.vm.network :public_network #    ip: "10.211.55.101"
     slave1.vm.hostname = "vm-cluster-node2"
     slave1.vm.provision :shell, :inline => $hosts_script
     slave1.vm.provision :hostmanager
+    slave1.vm.provider :vmware_fusion do |v|
+      v.name = "vm-cluster-node2"
+      v.vmx["memsize"] = "2048"
+      v.gui = false
+      v.vmx["vhv.enable"] = "TRUE" #Enable nested hypervisors to run x64 OS
+      v.vmx["ethernet0.generatedAddress"] = nil #If the vmx file contains an auto-generated MAC address, remove it
+      v.vmx["ethernet0.addressType"] = "static" #specify the MAC is static
+      v.vmx["ethernet0.connectionType"] = "nat" #specify the NAT network
+      v.vmx["ethernet0.present"] = "TRUE" #enable the NIC for the OS
+      v.vmx["ethernet0.address"] = "00:0c:29:ca:d4:a1" #the MAC address
+    end
+
   end
 
   config.vm.define :slave2 do |slave2|
     slave2.vm.box = "hashicorp/precise64"
-    slave2.vm.provider :virtualbox do |v|
-      v.name = "vm-cluster-node3"
-      v.vmx["memsize"] = "2048"
-    end
     slave2.vm.network :public_network # ip: "10.211.55.102"
     slave2.vm.hostname = "vm-cluster-node3"
     slave2.vm.provision :shell, :inline => $hosts_script
     slave2.vm.provision :hostmanager
+    slave2.vm.provider :vmware_fusion do |v|
+      v.name = "vm-cluster-node3"
+      v.vmx["memsize"] = "2048"
+      v.gui = false
+      v.vmx["vhv.enable"] = "TRUE" #Enable nested hypervisors to run x64 OS
+      v.vmx["ethernet0.generatedAddress"] = nil #If the vmx file contains an auto-generated MAC address, remove it
+      v.vmx["ethernet0.addressType"] = "static" #specify the MAC is static
+      v.vmx["ethernet0.connectionType"] = "nat" #specify the NAT network
+      v.vmx["ethernet0.present"] = "TRUE" #enable the NIC for the OS
+      v.vmx["ethernet0.address"] = "00:0c:29:ca:d4:a2" #the MAC address
+    end
+
   end
 
   config.vm.define :slave3 do |slave3|
     slave3.vm.box = "hashicorp/precise64"
-    slave3.vm.provider :virtualbox do |v|
-      v.name = "vm-cluster-node4"
-      v.vmx["memsize"] = "2048"
-    end
     slave3.vm.network :public_network # ip: "10.211.55.103"
     slave3.vm.hostname = "vm-cluster-node4"
     slave3.vm.provision :shell, :inline => $hosts_script
     slave3.vm.provision :hostmanager
+    slave3.vm.provider :vmware_fusion do |v|
+      v.name = "vm-cluster-node4"
+      v.vmx["memsize"] = "2048"
+      v.gui = false
+      v.vmx["vhv.enable"] = "TRUE" #Enable nested hypervisors to run x64 OS
+      v.vmx["ethernet0.generatedAddress"] = nil #If the vmx file contains an auto-generated MAC address, remove it
+      v.vmx["ethernet0.addressType"] = "static" #specify the MAC is static
+      v.vmx["ethernet0.connectionType"] = "nat" #specify the NAT network
+      v.vmx["ethernet0.present"] = "TRUE" #enable the NIC for the OS
+      v.vmx["ethernet0.address"] = "00:0c:29:ca:d4:a3" #the MAC address
+    end
+
   end
 
 end
